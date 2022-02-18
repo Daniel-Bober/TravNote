@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravNote</title>
+</head>
+
+<body>
+    <div class="logo">
+        <h1>TravNote</h1>
+    </div>
+    
+
+    <div class="main-area">
+
+        <div class="travel-details">
+
+            <h1 id="dtls-title">Dere</h1>
+
+            <div class="date-container">
+                <input type="text" onfocus="(this.type='date')" onblur="this.type='text'" placeholder="start date" id="dtls-travel-start-date">
+                <h1 id="date-line">-</h1>
+                <input type="text" onfocus="(this.type='date')" onblur="this.type='text'" placeholder="end date" id="dtls-travel-end-date">
+            </div>
+
+            <textarea id="travel-details-txt" cols="30" rows="10" placeholder="Travel decription"></textarea>
+
+        </div>
+
+        <div class="main-list">
+
+            <div class="list-container">
+                
+                <!-- <div class="main-list-box">
+                    <div class="main-list-element">
+                    
+                        <img src="Icons/pencil_icon.svg" class="el-edit-btn">
+                        <img src="Icons/bin_icon.svg" class="el-delete-btn">
+                        
+                        <div class="el-pic-div">
+                            <img src="Icons/photoSmall_icon.svg" id="el-pic-img">
+                            <input type="file" id="el-pic-input">
+                            <label for="el-pic-input" class="el-edit-pic-btn"><img src="Icons/editPic_icon.svg"></label>
+                        </div>
+    
+                        <div class="el-title-div">
+                            <input type="text" id="el-title" readonly>
+                        </div>
+                        
+                    </div>
+                </div> -->
+                
+            </div>
+
+            <span class="line-left"></span>
+            <span class="line-right"></span>
+            <div class="main-list-edit-bg"></div>
+        </div>
+
+        <div class="account-info">
+
+            <button class="add-travel-btn">
+                <img src="src/icons/plus_icon.svg">
+            </button>
+
+            <span class="line-account"></span>
+        </div>
+ 
+        <div class="weather">
+
+        </div>
+
+        <div class="popup-container">
+
+            <div class="popup-main">
+
+                <h2 id="popup-txt">New Travel</h2>
+
+                <input type="text" id="travel-title" placeholder="Title">
+
+                <div class="pic-date-div">
+                    <div class="main-pic-div">
+                        <img src="src/icons/photoSmall_icon.svg" id="main-pic-img">
+                        <input type="file" id="main-pic-input">
+                        <label for="main-pic-input" id="add-pic-btn"><img src="src/icons/plus_icon.svg"></label>
+                    </div>
+                    <div class="date-range">
+                        <div>
+                            <label for="travel-start-date">Beginning</label>
+                            <input type="date" id="travel-start-date" >
+                        </div>
+                        <div>
+                            <label for="travel-end-date">End</label>
+                            <input type="date" id="travel-end-date">
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <textarea id="travel-description" cols="30" rows="10" placeholder="Travel decription"></textarea>
+
+                <div class="popup-btns-div">
+                    <button id="popup-xmark-btn"><img src="src/icons/xMarkThin2_icon.svg"></button>
+                    <button id="popup-checkmark-btn"><img src="src/icons/checkMarkThin2_icon.svg"></button>
+                </div>
+                
+            </div>
+
+            <div class="popup-bg"></div>
+        </div>
+
+        <div class="main-bg"></div>
+    </div>
+
+    
+
+</body>
+</html>

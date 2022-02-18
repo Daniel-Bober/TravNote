@@ -1,0 +1,574 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --blueMain:rgb(0, 185, 160);
+    --blueLight:rgb(0 250 217);
+    --blueDark:rgb(0, 140, 107);
+}
+
+/*#region main*/
+body{
+    width: 100%;
+    height: 100vh;
+    font-family:cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-size: cover;
+    background-position:center;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url(../images/bg2.jpg);
+}
+h1{
+    font-size: 30px;
+    color: rgb(190, 190, 190);
+}
+h2{
+    font-size: 45px;
+    color: rgb(190, 190, 190);
+}
+
+.logo{
+    position: absolute;
+    top: 2%;
+}
+
+.main-area{
+    width: 85%;
+    height: 800px;
+    position: relative;
+    margin-top: 50px;
+
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 340px repeat(3, 1fr) 340px;
+}
+.main-bg{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--blueMain);
+    backdrop-filter:blur(10px);
+    z-index: -1;
+}
+
+input, textarea{
+    appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+    font-family: cursive;
+    color: rgb(190, 190, 190);
+}
+/*#endregion*/
+
+/*#region travelDetails*/
+.travel-details{
+    grid-row: 1 / span 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#dtls-title{
+    font-size: 30px;
+    margin-top: 50px;
+    text-align: center;
+    pointer-events: none;
+}
+
+#dtls-travel-start-date{
+    font-size: 18px;
+    text-align: right;
+    width: 150px;
+    cursor: pointer;
+}
+#dtls-travel-end-date{
+    font-size: 18px;
+    text-align: left;
+    width: 150px;
+    cursor: pointer;
+}
+.date-container input[type="date"]:focus{
+    border-bottom: 1px solid var(--blueMain);
+}
+#date-line{
+    display: inline;
+    pointer-events: none;
+}
+
+#travel-details-txt{
+    width: 250px;
+    height: 430px;
+    margin-top: 30px;
+    text-align: center;
+    box-sizing: border-box;
+    resize: none;
+
+    border-top: 1px solid rgb(170, 170, 170);
+    border-bottom: 1px solid rgb(170, 170, 170);
+}
+/*#endregion*/
+
+
+/*#region mainList*/
+.main-list{
+    grid-column: 2 / 5;
+    grid-row: 1 / span 2;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main-grid-cell{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.list-container{
+    width: 100%;
+    height: 100%;
+    max-height: 700px;
+    display: grid;
+    overflow-y: scroll;
+    gap: 20px;
+    grid-template-columns: repeat(3, minmax(290px, 1fr));
+    /* grid-template-rows: repeat(auto-fit, minmax(290px, 1fr)); */
+}
+
+/*#endregion*/
+/*#region mainListElement*/
+.main-list-box{
+    width: 100%;
+    height: 100%;
+}
+.main-list-element{
+    width: 290px;
+    height: 290px;
+    background-color: rgb(24, 24, 24);
+    position: relative;
+    transition: 150ms ease-out;
+
+    z-index: 4;
+}
+.main-list-element.editActive{
+   transform: scale(1.2);
+   z-index: 6;
+   position:absolute;
+
+    border: 1px solid transparent;
+    border-image: linear-gradient(-25deg, var(--blueDark), var(--blueLight));
+    border-image-slice: 1;
+}
+
+.main-list-edit-bg{
+    width: 120vw;
+    height: 120vh;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.55);
+
+    opacity: 0;
+    pointer-events: none;
+    transition: 300ms;
+}
+.main-list-edit-bg.editActive{
+    opacity: 1;
+    z-index: 5;
+    pointer-events: auto;
+}
+
+.main-list-element input{
+    text-align: center;
+    font-family: cursive;
+    font-size: 17px;
+    color: rgb(190, 190, 190);
+}
+
+.el-edit-btn{
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    opacity: 0;
+    transition: 150ms;
+    cursor: pointer;
+    z-index: 1;
+}
+.el-edit-btn.editActive{
+    display: none;
+}
+.main-list-element:hover .el-edit-btn{
+    opacity: 1;
+}
+
+.el-delete-btn{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+
+    transition: 150ms;
+    cursor: pointer;
+    z-index: 1;
+    display: none;
+}
+.el-delete-btn.editActive{
+    display: block;
+}
+.el-delete-btn:hover{
+    transform: scale(1.1);
+}
+
+.el-edit-pic-btn{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 80px;
+    left: 10px;
+
+    transition: 150ms;
+    cursor: pointer;
+    z-index: 1;
+    display: none;
+}
+.el-edit-pic-btn img{
+    pointer-events: none;
+}
+.el-edit-pic-btn.editActive{
+    display: block;
+}
+.el-edit-pic-btn:hover{
+    transform: scale(1.1);
+}
+
+.el-pic-div{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#el-pic-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
+#el-pic-input{
+    display: none;
+}
+#el-pic-input img{
+    pointer-events: none;
+}
+#el-add-pic-btn{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+
+    background: rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    cursor: pointer;
+    transition: 150ms;
+    display: none;
+}
+#el-add-pic-btn img{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: 100ms;
+}
+.el-title-div{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+#el-title{
+    width: 200px;
+    font-size: 35px;
+    pointer-events: none;
+}
+#el-title:not(:read-only){
+    border-bottom: 1px solid var(--blueMain);
+    pointer-events: auto;
+}
+
+
+/*#endregion*/
+
+
+/*#region popUpWindow*/
+.popup-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    pointer-events: none;
+}
+.popup-bg{
+    width: 120vw;
+    height: 120vh;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.55);
+    z-index: 6;
+
+    opacity: 0;
+    pointer-events: none;
+}
+.popup-main{
+    width: 600px;
+    height: 750px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    background-image: radial-gradient(circle, rgb(20, 20, 20), rgb(12, 12, 12));
+    border: 1px solid transparent;
+    border-image: linear-gradient(-25deg, var(--blueDark), var(--blueLight));
+    border-image-slice: 1;
+    z-index: 8;
+
+    transform: translateY(-50px);
+
+    opacity: 0;
+    pointer-events: none;
+}
+#popup-txt{
+    position: absolute;
+    top: 20px;
+}
+.popup-main input,.popup-main textarea{
+    padding: 5px;
+    margin: 15px;
+    background-color: rgb(24, 24, 24);
+    border: 1px solid transparent;
+    border-image: linear-gradient(-25deg, var(--blueDark), var(--blueLight));
+    border-image-slice: 1;
+
+    text-align: center;
+    font-family: cursive;
+    font-size: 17px;
+    color: rgb(190, 190, 190);
+}
+.popup-main:focus input textarea{
+    border-image: linear-gradient(-25deg, rgb(190, 190, 190), rgb(190, 190, 190));
+}
+
+#travel-title{
+    width: 200px;
+    margin-top: 150px;
+
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(-25deg, var(--blueDark), var(--blueLight));
+    border-image-slice: 1;
+    
+}
+
+.main-pic-div{
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    background-color: rgb(24, 24, 24);
+    border: 1px solid transparent;
+    border-image: linear-gradient(-25deg, var(--blueDark), var(--blueLight));
+    border-image-slice: 1;
+    
+}
+#main-pic-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+#main-pic-input{
+    display: none;
+}
+#add-pic-btn{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    background: rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    cursor: pointer;
+    transition: 150ms;
+}
+#add-pic-btn img{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: 100ms;
+}
+#add-pic-btn:hover{
+    opacity: 1;
+}
+#add-pic-btn:hover img{
+    width: 35px;
+    height: 35px;
+}
+
+.pic-date-div{
+    width: 400px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.pic-date-div label{
+    font-size: 15px;
+    color: rgb(190, 190, 190);
+}
+
+.popup-main input[type="date"]{
+    margin: 0;
+    margin-top: 2px;
+}
+.date-range{
+    height: 150px;
+    margin-bottom: 23px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.date-range div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#travel-description{
+    width: 400px;
+    height: 130px;
+    margin-top: 30px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.popup-btns-div{
+    width: 200px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+.popup-btns-div button{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+    transition: 100ms;
+}
+.popup-btns-div button:hover{
+    filter:brightness(0.6);
+}
+.popup-btns-div button:active{
+    transform: scale(0.92);
+}
+
+
+
+/*#endregion*/
+
+
+/*#region accountInfo*/
+.add-travel-btn{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: rgb(24, 24, 24);
+    border: 1px solid transparent;
+    border-image: linear-gradient(-25deg, var(--blueDark), var(--blueLight));
+    border-image-slice: 1;
+    transition: 100ms;
+
+    position: absolute;
+    bottom: 15px;
+    left: 45%;
+}
+.add-travel-btn img{
+    width: 60%;
+    height: 60%;
+}
+.add-travel-btn:hover{
+    color: var(--blueMain);
+    border-image: linear-gradient(-25deg, rgb(190, 190, 190), rgb(190, 190, 190));
+    border-image-slice: 1;
+}
+.add-travel-btn:active{
+    transform: scale(0.95);
+}
+
+.account-info{
+    position: relative;
+}
+/*#endregion*/
+
+/*#region lines*/
+.line-left{
+    width: 1px;
+    height: 700px;
+    position: absolute;
+    left: -20px;
+    top: 50px;
+    background-color: rgb(190, 190, 190);
+}
+.line-right{
+    width: 1px;
+    height: 700px;
+    position: absolute;
+    right: -20px;
+    top: 50px;
+    background-color: rgb(190, 190, 190);
+}
+
+.line-account{
+    width: 70%;
+    height: 1px;
+    position: absolute;
+    bottom: -10px;
+    left: 15%;
+    background-color: rgb(190, 190, 190);
+}
+/*#endregion*/
+
+::-webkit-scrollbar{
+    display:none;
+}
+::-webkit-calendar-picker-indicator{
+    cursor: pointer;
+    filter: invert(0.46);
+}
