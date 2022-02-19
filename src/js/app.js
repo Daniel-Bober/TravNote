@@ -9,7 +9,7 @@ import TileService from './tileService';
 
 class App {
     constructor() {
-        App.listenersInit();
+        this.listenersInit();
     }
 
     static listenersInit() {
