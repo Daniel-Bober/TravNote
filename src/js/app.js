@@ -6,10 +6,13 @@ import '../scss/main.scss';
 import Storage from './Storage';
 import Tile from './tile';
 import TileService from './tileService';
+import PopUp from './popUp';
+
+const popUp = new PopUp();
 
 class App {
     constructor() {
-        this.listenersInit();
+        App.listenersInit();
     }
 
     static listenersInit() {
@@ -32,6 +35,7 @@ class App {
             const tile = new Tile();
             TileService.generateTile(tile);
             TileService.tilesArray.push(tile);
+            popUp.CloseWindow(true);
 
             localStorage.setItem('tilesArray', JSON.stringify(TileService.tilesArray));
         });
@@ -50,7 +54,6 @@ class App {
                     const newPic = this.files[0];
 
                     // Storage.uploadFile(newPic, 'Images');
-                    console.log('change');
                     if (newPic) {
                         const reader = new FileReader();
                         const elPic = TileService.trObject.elImg;

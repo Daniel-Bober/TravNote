@@ -4,7 +4,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-plusplus */
-import { CloseWindow } from './popUpWin';
 
 export default class TileService {
     static tilesCount = 0;
@@ -88,8 +87,6 @@ export default class TileService {
             tile.elTitle.value = tile.title;
         }
         tile.titleDiv.appendChild(tile.elTitle);
-
-        CloseWindow(true);
     }
 
     static removeTile(clicked) {
