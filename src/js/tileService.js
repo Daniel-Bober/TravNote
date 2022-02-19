@@ -121,6 +121,11 @@ export default class TileService {
         tile.elTitle.setAttribute('readonly', 'readonly');
     }
 
+    static reasignTileData(tile) {
+        tile.title = tile.elTitle.value;
+        tile.image = tile.elImg.src;
+    }
+
     static reasignID(obj, nr) {
         obj.mainEl.removeAttribute('data-id');
         obj.mainEl.setAttribute('data-id', nr);

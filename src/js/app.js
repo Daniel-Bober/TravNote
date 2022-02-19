@@ -77,6 +77,8 @@ class App {
         editBg.addEventListener('click', e => {
             TileService.editModeOff(TileService.trObject);
 
+            TileService.reasignTileData(TileService.trObject);
+
             TileService.tilesArray[TileService.trObjectNr] = TileService.trObject;
 
             localStorage.setItem('tilesArray', JSON.stringify(TileService.tilesArray));
