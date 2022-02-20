@@ -24,66 +24,11 @@ export default class PopUp {
 
     static travelEnd;
 
-    static travelDetails = document.querySelector('#travel-description');
+    static travelDetails;
 
-    openPopUp = gsap.timeline({ ease: 'power2.easeOut', paused: true, onReverseComplete: this.ClearPopUpCheck })
-        .to(this.popupBlackBg, { duration: 0.25, opacity: 1, pointerEvents: 'auto' })
-        .to(this.popupMain, { duration: 0.3, y: '0px', opacity: 1, pointerEvents: 'auto' }, -0.1);
+    static openPopUp;
 
     static popUpClear = false;
-
-    constructor() {
-        this.listenersInit();
-    }
-
-    listenersInit() {
-        this.addTravelBtn.addEventListener('click', e => {
-            this.OpenWindow();
-        });
-
-        this.popupBlackBg.addEventListener('click', e => {
-            this.CloseWindow();
-        });
-
-        this.mainPicInput.addEventListener('change', function onChange() {
-            const newPic = this.files[0];
-
-            if (newPic) {
-                const reader = new FileReader();
-
-                reader.addEventListener('load', () => {
-                    this.mainPic.setAttribute('src', reader.result);
-                });
-                reader.readAsDataURL(newPic);
-            }
-        });
-
-        this.xmark.addEventListener('click', e => {
-            this.CloseWindow(true);
-        });
-    }
-
-    ClearPopUpCheck() {
-        if (this.popUpClear) {
-            this.title.value = null;
-            this.mainPic.setAttribute('src', 'src/icons/photoSmall_icon.svg');
-            this.travelStart.value = null;
-            this.travelEnd.value = null;
-            this.travelDetails.value = null;
-            this.popUpClear = false;
-        }
-    }
-
-    OpenWindow() {
-        this.openPopUp.timeScale(1);
-        this.openPopUp.play();
-    }
-
-    CloseWindow(clear) {
-        this.popUpClear = clear;
-        this.openPopUp.timeScale(1.6);
-        this.openPopUp.reverse();
-    }
 
     static initProperties() {
         this.popupBlackBg = document.querySelector('.popup-bg');
@@ -96,5 +41,58 @@ export default class PopUp {
         this.travelStart = document.querySelector('#travel-start-date');
         this.travelEnd = document.querySelector('#travel-end-date');
         this.travelDetails = document.querySelector('#travel-description');
+
+        this.openPopUp = gsap.timeline({ ease: 'power2.easeOut', paused: true, onReverseComplete: this.ClearPopUpCheck })
+            .to(this.popupBlackBg, { duration: 0.25, opacity: 1, pointerEvents: 'auto' })
+            .to(this.popupMain, { duration: 0.3, y: '0px', opacity: 1, pointerEvents: 'auto' }, -0.1);
+    }
+
+    static initListeners() {
+        this.addTravelBtn.addEventListener('click', e => {
+            PopUp.OpenWindow();
+        });
+
+        this.popupBlackBg.addEventListener('click', e => {
+            PopUp.CloseWindow();
+        });
+
+        this.mainPicInput.addEventListener('change', function onChange() {
+            const newPic = this.files[0];
+
+            if (newPic) {
+                const reader = new FileReader();
+
+                reader.addEventListener('load', () => {
+                    PopUp.mainPic.setAttribute('src', reader.result);
+                });
+                reader.readAsDataURL(newPic);
+            }
+        });
+
+        this.xmark.addEventListener('click', e => {
+            PopUp.CloseWindow(true);
+        });
+    }
+
+    static ClearPopUpCheck() {
+        if (this.popUpClear) {
+            this.title.value = null;
+            this.mainPic.setAttribute('src', 'src/icons/photoSmall_icon.svg');
+            this.travelStart.value = null;
+            this.travelEnd.value = null;
+            this.travelDetails.value = null;
+            this.popUpClear = false;
+        }
+    }
+
+    static OpenWindow() {
+        this.openPopUp.timeScale(1);
+        this.openPopUp.play();
+    }
+
+    static CloseWindow(clear) {
+        this.popUpClear = clear;
+        this.openPopUp.timeScale(1.6);
+        this.openPopUp.reverse();
     }
 }

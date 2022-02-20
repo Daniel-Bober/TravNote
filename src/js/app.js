@@ -8,16 +8,15 @@ import Tile from './tile';
 import TileService from './tileService';
 import PopUp from './popUp';
 
-const popUp = new PopUp();
-
 class App {
     constructor() {
-        App.listenersInit();
+        App.initListeners();
         TileService.initProperties();
         PopUp.initProperties();
+        PopUp.initListeners();
     }
 
-    static listenersInit() {
+    static initListeners() {
         const mainList = document.querySelector('.list-container');
         const addBtn = document.querySelector('#popup-checkmark-btn');
         const editBg = document.querySelector('.main-list-edit-bg');
@@ -37,7 +36,7 @@ class App {
             const tile = new Tile();
             TileService.generateTile(tile);
             TileService.tilesArray.push(tile);
-            popUp.CloseWindow(true);
+            PopUp.CloseWindow(true);
 
             localStorage.setItem('tilesArray', JSON.stringify(TileService.tilesArray));
         });

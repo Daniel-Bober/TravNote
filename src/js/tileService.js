@@ -20,6 +20,12 @@ export default class TileService {
 
     static trObject;
 
+    static initProperties() {
+        this.mainList = document.querySelector('.list-container');
+        this.title = document.querySelector('#travel-title');
+        this.popupPic = document.querySelector('#main-pic-img');
+    }
+
     static generateTile(tile) {
         this.tilesCount++;
 
@@ -29,7 +35,7 @@ export default class TileService {
 
         tile.mainBox = document.createElement('div');
         tile.mainBox.classList.add('main-list-box');
-        mainList.appendChild(tile.mainBox);
+        this.mainList.appendChild(tile.mainBox);
 
         tile.mainEl = document.createElement('div');
         tile.mainEl.classList.add('main-list-element');
@@ -151,11 +157,5 @@ export default class TileService {
         const nr = closestList.dataset.id;
         this.trObjectNr = +nr - 1;
         this.trObject = this.tilesArray[this.trObjectNr];
-    }
-
-    static initProperties() {
-        this.mainList = document.querySelector('.list-container');
-        this.title = document.querySelector('#travel-title');
-        this.popupPic = document.querySelector('#main-pic-img');
     }
 }
