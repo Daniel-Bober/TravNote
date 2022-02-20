@@ -6,25 +6,25 @@
 import { gsap } from 'gsap';
 
 export default class PopUp {
-    popupBlackBg = document.querySelector('.popup-bg');
+    static popupBlackBg;
 
-    mainPic = document.querySelector('#main-pic-img');
+    static mainPic;
 
-    mainPicInput = document.querySelector('#main-pic-input');
+    static mainPicInput;
 
-    addTravelBtn = document.querySelector('.add-travel-btn');
+    static addTravelBtn;
 
-    popupMain = document.querySelector('.popup-main');
+    static popupMain;
 
-    xmark = document.querySelector('#popup-xmark-btn');
+    static xmark;
 
-    title = document.querySelector('#travel-title');
+    static title;
 
-    travelStart = document.querySelector('#travel-start-date');
+    static travelStart;
 
-    travelEnd = document.querySelector('#travel-end-date');
+    static travelEnd;
 
-    travelDetails = document.querySelector('#travel-description');
+    static travelDetails = document.querySelector('#travel-description');
 
     openPopUp = gsap.timeline({ ease: 'power2.easeOut', paused: true, onReverseComplete: this.ClearPopUpCheck })
         .to(this.popupBlackBg, { duration: 0.25, opacity: 1, pointerEvents: 'auto' })
@@ -83,5 +83,18 @@ export default class PopUp {
         this.popUpClear = clear;
         this.openPopUp.timeScale(1.6);
         this.openPopUp.reverse();
+    }
+
+    static initProperties() {
+        this.popupBlackBg = document.querySelector('.popup-bg');
+        this.mainPic = document.querySelector('#main-pic-img');
+        this.mainPicInput = document.querySelector('#main-pic-input');
+        this.addTravelBtn = document.querySelector('.add-travel-btn');
+        this.popupMain = document.querySelector('.popup-main');
+        this.xmark = document.querySelector('#popup-xmark-btn');
+        this.title = document.querySelector('#travel-title');
+        this.travelStart = document.querySelector('#travel-start-date');
+        this.travelEnd = document.querySelector('#travel-end-date');
+        this.travelDetails = document.querySelector('#travel-description');
     }
 }

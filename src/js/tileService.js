@@ -6,6 +6,12 @@
 /* eslint-disable no-plusplus */
 
 export default class TileService {
+    static mainList;
+
+    static title;
+
+    static popupPic;
+
     static tilesCount = 0;
 
     static tilesArray = [];
@@ -20,10 +26,6 @@ export default class TileService {
         if (tile.tile === undefined) {
             localStorage.setItem('tilesCount', this.tilesCount);
         }
-
-        const mainList = document.querySelector('.list-container');
-        const title = document.querySelector('#travel-title');
-        const popupPic = document.querySelector('#main-pic-img');
 
         tile.mainBox = document.createElement('div');
         tile.mainBox.classList.add('main-list-box');
@@ -149,5 +151,11 @@ export default class TileService {
         const nr = closestList.dataset.id;
         this.trObjectNr = +nr - 1;
         this.trObject = this.tilesArray[this.trObjectNr];
+    }
+
+    static initProperties() {
+        this.mainList = document.querySelector('.list-container');
+        this.title = document.querySelector('#travel-title');
+        this.popupPic = document.querySelector('#main-pic-img');
     }
 }

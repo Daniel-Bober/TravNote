@@ -13,6 +13,8 @@ const popUp = new PopUp();
 class App {
     constructor() {
         App.listenersInit();
+        TileService.initProperties();
+        PopUp.initProperties();
     }
 
     static listenersInit() {
