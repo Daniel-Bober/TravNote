@@ -5,28 +5,30 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-plusplus */
 
+import Tile from './tile';
+
 export default class TileService {
-    static mainList;
+    static mainList: HTMLDivElement;
 
-    static title;
+    static title: HTMLInputElement;
 
-    static popupPic;
+    static popupPic: HTMLImageElement;
 
-    static detailsTitle;
+    static detailsTitle: HTMLHeadingElement;
 
-    static startDate;
+    static startDate: HTMLInputElement;
 
-    static endDate;
+    static endDate: HTMLInputElement;
 
-    static description;
+    static description: HTMLTextAreaElement;
 
     static tilesCount = 0;
 
-    static tilesArray = [];
+    static tilesArray: object[] = [];
 
-    static trObjectNr;
+    static trObjectNr: number;
 
-    static trObject;
+    static trObject: object;
 
     static initProperties() {
         this.mainList = document.querySelector('.list-container');
@@ -38,7 +40,7 @@ export default class TileService {
         this.popupPic = document.querySelector('#main-pic-img');
     }
 
-    static generateTile(tile) {
+    static generateTile(tile: Tile) {
         this.tilesCount++;
 
         if (tile.title === undefined) {
@@ -113,7 +115,7 @@ export default class TileService {
         tile.description = this.description.value;
     }
 
-    static removeTile(clicked) {
+    static removeTile(clicked: HTMLElement) {
         const editBg = document.querySelector('.main-list-edit-bg');
         editBg.classList.remove('editActive');
 
@@ -123,7 +125,7 @@ export default class TileService {
         localStorage.setItem('tilesArray', JSON.stringify(this.tilesArray));
     }
 
-    static editModeOn(tile) {
+    static editModeOn(tile: Tile) {
         const editBg = document.querySelector('.main-list-edit-bg');
         editBg.classList.add('editActive');
 
@@ -135,7 +137,7 @@ export default class TileService {
         tile.elTitle.removeAttribute('readonly');
     }
 
-    static editModeOff(tile) {
+    static editModeOff(tile: Tile) {
         const editBg = document.querySelector('.main-list-edit-bg');
         editBg.classList.remove('editActive');
 
@@ -147,39 +149,37 @@ export default class TileService {
         tile.elTitle.setAttribute('readonly', 'readonly');
     }
 
-    static reassignTileData(tile) {
+    static reassignTileData(tile: Tile) {
         tile.title = tile.elTitle.value;
         tile.image = tile.elImg.src;
     }
 
-    static reassignID(obj, nr) {
+    static reassignID(obj: Tile, nr: number) {
         obj.mainEl.removeAttribute('data-id');
-        obj.mainEl.setAttribute('data-id', nr);
+        obj.mainEl.setAttribute('data-id', nr.toString());
     }
 
     static reassignElementIndex() {
         let index = 1;
         this.tilesCount = 0;
-
-        this.tilesArray.forEach(el => {
+        this.tilesArray.forEach((el: Tile) => {
             this.reassignID(el, index);
             index++;
             this.tilesCount++;
         });
 
-        localStorage.setItem('tilesCount', this.tilesCount);
+        localStorage.setItem('tilesCount', this.tilesCount.toString());
     }
 
-    static setTargetObject(clicked) {
+    static setTargetObject(clicked: any) {
         const closestList = clicked.closest('.main-list-element');
         const nr = closestList.dataset.id;
         this.trObjectNr = +nr - 1;
         this.trObject = this.tilesArray[this.trObjectNr];
     }
 
-    static clickedTile(tile) {
-        console.log(TileService.detailsTitle.value);
-        TileService.detailsTitle.value = tile.title;
+    static clickedTile(tile: Tile) {
+        TileService.detailsTitle.innerHTML = tile.title;
         TileService.startDate.value = tile.startDate;
         TileService.endDate.value = tile.endDate;
         TileService.description.value = tile.description;

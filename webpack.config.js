@@ -6,7 +6,7 @@ const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
-    entry: './src/js/app.js',
+    entry: './src/js/app.ts',
     output: {
         filename: 'bundle.min.js',
         path: path.resolve(__dirname, 'dist'),
@@ -16,6 +16,11 @@ module.exports = {
     devtool: 'source-map',
     module: {
         rules: [
+            {
+                test: /.tsx?$/,
+                use: ['ts-loader'],
+                exclude: /node_modules/,
+            },
             {
                 test: /\.css$/i,
                 use: [
