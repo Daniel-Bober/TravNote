@@ -36,7 +36,7 @@ class App {
             const tile = new Tile();
             TileService.generateTile(tile);
             TileService.tilesArray.push(tile);
-            PopUp.CloseWindow(true);
+            PopUp.closeWindow(true);
 
             localStorage.setItem('tilesArray', JSON.stringify(TileService.tilesArray));
         });
@@ -48,6 +48,9 @@ class App {
             } else if (e.target.classList.contains('el-delete-btn')) {
                 TileService.removeTile(e.target);
                 TileService.reassignElementIndex();
+            } else if (e.target.classList.contains('el-title-div')) {
+                TileService.setTargetObject(e.target);
+                TileService.clickedTile(TileService.trObject);
             }
 
             if (e.target.classList.contains('el-edit-pic-btn')) {
@@ -78,7 +81,7 @@ class App {
         editBg.addEventListener('click', e => {
             TileService.editModeOff(TileService.trObject);
 
-            TileService.reasignTileData(TileService.trObject);
+            TileService.reassignTileData(TileService.trObject);
 
             TileService.tilesArray[TileService.trObjectNr] = TileService.trObject;
 

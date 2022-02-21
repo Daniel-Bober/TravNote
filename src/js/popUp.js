@@ -42,18 +42,18 @@ export default class PopUp {
         this.travelEnd = document.querySelector('#travel-end-date');
         this.travelDetails = document.querySelector('#travel-description');
 
-        this.openPopUp = gsap.timeline({ ease: 'power2.easeOut', paused: true, onReverseComplete: this.ClearPopUpCheck })
+        this.openPopUp = gsap.timeline({ ease: 'power2.easeOut', paused: true, onReverseComplete: this.clearPopUpCheck })
             .to(this.popupBlackBg, { duration: 0.25, opacity: 1, pointerEvents: 'auto' })
             .to(this.popupMain, { duration: 0.3, y: '0px', opacity: 1, pointerEvents: 'auto' }, -0.1);
     }
 
     static initListeners() {
         this.addTravelBtn.addEventListener('click', e => {
-            PopUp.OpenWindow();
+            PopUp.openWindow();
         });
 
         this.popupBlackBg.addEventListener('click', e => {
-            PopUp.CloseWindow();
+            PopUp.closeWindow();
         });
 
         this.mainPicInput.addEventListener('change', function onChange() {
@@ -70,11 +70,11 @@ export default class PopUp {
         });
 
         this.xmark.addEventListener('click', e => {
-            PopUp.CloseWindow(true);
+            PopUp.closeWindow(true);
         });
     }
 
-    static ClearPopUpCheck() {
+    static clearPopUpCheck() {
         if (this.popUpClear) {
             this.title.value = null;
             this.mainPic.setAttribute('src', 'src/icons/photoSmall_icon.svg');
@@ -85,12 +85,12 @@ export default class PopUp {
         }
     }
 
-    static OpenWindow() {
+    static openWindow() {
         this.openPopUp.timeScale(1);
         this.openPopUp.play();
     }
 
-    static CloseWindow(clear) {
+    static closeWindow(clear) {
         this.popUpClear = clear;
         this.openPopUp.timeScale(1.6);
         this.openPopUp.reverse();

@@ -12,6 +12,14 @@ export default class TileService {
 
     static popupPic;
 
+    static detailsTitle;
+
+    static startDate;
+
+    static endDate;
+
+    static description;
+
     static tilesCount = 0;
 
     static tilesArray = [];
@@ -23,14 +31,18 @@ export default class TileService {
     static initProperties() {
         this.mainList = document.querySelector('.list-container');
         this.title = document.querySelector('#travel-title');
+        this.detailsTitle = document.querySelector('#dtls-title');
+        this.startDate = document.querySelector('#dtls-travel-start-date');
+        this.endDate = document.querySelector('#dtls-travel-end-date');
+        this.description = document.querySelector('#travel-details-txt');
         this.popupPic = document.querySelector('#main-pic-img');
     }
 
     static generateTile(tile) {
         this.tilesCount++;
 
-        if (tile.tile === undefined) {
-            localStorage.setItem('tilesCount', this.tilesCount);
+        if (tile.title === undefined) {
+            localStorage.setItem('tilesCount', this.tilesCount.toString());
         }
 
         tile.mainBox = document.createElement('div');
@@ -39,7 +51,7 @@ export default class TileService {
 
         tile.mainEl = document.createElement('div');
         tile.mainEl.classList.add('main-list-element');
-        tile.mainEl.setAttribute('data-id', this.tilesCount);
+        tile.mainEl.setAttribute('data-id', this.tilesCount.toString());
         tile.mainBox.appendChild(tile.mainEl);
 
         tile.editBtn = document.createElement('img');
@@ -58,8 +70,8 @@ export default class TileService {
 
         tile.elImg = document.createElement('img');
         if (tile.image === undefined) {
-            tile.elImg.src = popupPic.src;
-            tile.image = popupPic.src;
+            tile.elImg.src = this.popupPic.src;
+            tile.image = this.popupPic.src;
         } else {
             tile.elImg.src = tile.image;
         }
@@ -89,12 +101,16 @@ export default class TileService {
         tile.elTitle.setAttribute('id', 'el-title');
         tile.elTitle.setAttribute('readonly', 'readonly');
         if (tile.title === undefined) {
-            tile.elTitle.value = title.value;
-            tile.title = title.value;
+            tile.elTitle.value = this.title.value;
+            tile.title = this.title.value;
         } else {
             tile.elTitle.value = tile.title;
         }
         tile.titleDiv.appendChild(tile.elTitle);
+
+        tile.startDate = this.startDate.value;
+        tile.endDate = this.endDate.value;
+        tile.description = this.description.value;
     }
 
     static removeTile(clicked) {
@@ -115,6 +131,7 @@ export default class TileService {
         tile.editBtn.classList.add('editActive');
         tile.deleteBtn.classList.add('editActive');
         tile.elEditPicBtn.classList.add('editActive');
+        tile.titleDiv.classList.add('editActive');
         tile.elTitle.removeAttribute('readonly');
     }
 
@@ -126,15 +143,16 @@ export default class TileService {
         tile.editBtn.classList.remove('editActive');
         tile.deleteBtn.classList.remove('editActive');
         tile.elEditPicBtn.classList.remove('editActive');
+        tile.titleDiv.classList.remove('editActive');
         tile.elTitle.setAttribute('readonly', 'readonly');
     }
 
-    static reasignTileData(tile) {
+    static reassignTileData(tile) {
         tile.title = tile.elTitle.value;
         tile.image = tile.elImg.src;
     }
 
-    static reasignID(obj, nr) {
+    static reassignID(obj, nr) {
         obj.mainEl.removeAttribute('data-id');
         obj.mainEl.setAttribute('data-id', nr);
     }
@@ -144,7 +162,7 @@ export default class TileService {
         this.tilesCount = 0;
 
         this.tilesArray.forEach(el => {
-            this.reasignID(el, index);
+            this.reassignID(el, index);
             index++;
             this.tilesCount++;
         });
@@ -157,5 +175,13 @@ export default class TileService {
         const nr = closestList.dataset.id;
         this.trObjectNr = +nr - 1;
         this.trObject = this.tilesArray[this.trObjectNr];
+    }
+
+    static clickedTile(tile) {
+        console.log(TileService.detailsTitle.value);
+        TileService.detailsTitle.value = tile.title;
+        TileService.startDate.value = tile.startDate;
+        TileService.endDate.value = tile.endDate;
+        TileService.description.value = tile.description;
     }
 }

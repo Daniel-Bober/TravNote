@@ -3,6 +3,12 @@ export default class Tile {
 
     title;
 
+    description;
+
+    startDate;
+
+    endDate;
+
     mainBox;
 
     mainEl;

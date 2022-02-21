@@ -303,8 +303,13 @@ input, textarea{
     flex-direction: column;
     position: absolute;
     bottom: 0;
+    cursor: pointer;
     background-color: rgba(0, 0, 0, 0.6);
 }
+.el-title-div.editActive{
+    pointer-events: none;
+}
+
 #el-title{
     width: 200px;
     font-size: 35px;
