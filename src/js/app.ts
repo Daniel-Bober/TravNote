@@ -1,9 +1,8 @@
-/* eslint-disable no-shadow */
+/* eslint-disable no-shadow,func-names */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable arrow-parens */
 import '../scss/main.scss';
-import Storage from './Storage';
 import Tile from './tile';
 import TileService from './tileService';
 import PopUp from './popUp';
@@ -20,19 +19,18 @@ class App {
         const mainList = document.querySelector('.list-container');
         const addBtn = document.querySelector('#popup-checkmark-btn');
         const editBg = document.querySelector('.main-list-edit-bg');
-
-        window.onload = e => {
+        window.onload = () => {
             // localStorage.clear();
             if (localStorage.getItem('tilesArray') !== null) {
                 TileService.tilesArray = JSON.parse(localStorage.getItem('tilesArray'));
 
-                TileService.tilesArray.forEach(el => {
+                TileService.tilesArray.forEach((el: Tile) => {
                     TileService.generateTile(el);
                 });
             }
         };
 
-        addBtn.addEventListener('click', e => {
+        addBtn.addEventListener('click', () => {
             const tile = new Tile();
             TileService.generateTile(tile);
             TileService.tilesArray.push(tile);
@@ -42,43 +40,38 @@ class App {
         });
 
         mainList.addEventListener('click', e => {
-            if (e.target.classList.contains('el-edit-btn')) {
+            const eTarget = e.target as HTMLElement;
+
+            if (eTarget.classList.contains('el-edit-btn')) {
                 TileService.setTargetObject(e.target);
                 TileService.editModeOn(TileService.trObject);
-            } else if (e.target.classList.contains('el-delete-btn')) {
-                TileService.removeTile(e.target);
+            } else if (eTarget.classList.contains('el-delete-btn')) {
+                TileService.removeTile(eTarget);
                 TileService.reassignElementIndex();
-            } else if (e.target.classList.contains('el-title-div')) {
+            } else if (eTarget.classList.contains('el-title-div')) {
                 TileService.setTargetObject(e.target);
                 TileService.clickedTile(TileService.trObject);
             }
 
-            if (e.target.classList.contains('el-edit-pic-btn')) {
+            if (eTarget.classList.contains('el-edit-pic-btn')) {
                 TileService.trObject.elImgInput.addEventListener('change', function () {
                     const newPic = this.files[0];
 
-                    // Storage.uploadFile(newPic, 'Images');
                     if (newPic) {
                         const reader = new FileReader();
                         const elPic = TileService.trObject.elImg;
 
-                        // reader.onload = e => {
-                        //     elPic.setAttribute('src', e.target.result);
-                        // };
-
                         reader.addEventListener('load', () => {
-                            elPic.setAttribute('src', reader.result);
-                            // reader.removeEventListener('load', ReaderLoad);
+                            elPic.setAttribute('src', reader.result.toString());
                         });
                         reader.readAsDataURL(newPic);
                     }
-
-                    // TileService.trObject.elImgInput.removeEventListener('change', setPic);
-                });
+                    this.value = null;
+                }, { once: true });
             }
         });
 
-        editBg.addEventListener('click', e => {
+        editBg.addEventListener('click', () => {
             TileService.editModeOff(TileService.trObject);
 
             TileService.reassignTileData(TileService.trObject);
@@ -89,5 +82,5 @@ class App {
         });
     }
 }
-
-const app = new App();
+// eslint-disable-next-line no-new
+new App();

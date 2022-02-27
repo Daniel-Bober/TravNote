@@ -12,31 +12,42 @@ export default class TileService {
 
     static title: HTMLInputElement;
 
-    static popupPic: HTMLImageElement;
-
-    static detailsTitle: HTMLHeadingElement;
-
     static startDate: HTMLInputElement;
 
     static endDate: HTMLInputElement;
 
     static description: HTMLTextAreaElement;
 
+    static popupPic: HTMLImageElement;
+
+    static detailsTitle: HTMLHeadingElement;
+
+    static detailsStartDate: HTMLInputElement;
+
+    static detailsEndDate: HTMLInputElement;
+
+    static detailsDescription: HTMLTextAreaElement;
+
     static tilesCount = 0;
 
-    static tilesArray: object[] = [];
+    static tilesArray: Tile[] = [];
 
     static trObjectNr: number;
 
-    static trObject: object;
+    static trObject: Tile;
 
     static initProperties() {
         this.mainList = document.querySelector('.list-container');
+
         this.title = document.querySelector('#travel-title');
+        this.startDate = document.querySelector('#travel-start-date');
+        this.endDate = document.querySelector('#travel-end-date');
+        this.description = document.querySelector('#travel-description');
+
         this.detailsTitle = document.querySelector('#dtls-title');
-        this.startDate = document.querySelector('#dtls-travel-start-date');
-        this.endDate = document.querySelector('#dtls-travel-end-date');
-        this.description = document.querySelector('#travel-details-txt');
+        this.detailsStartDate = document.querySelector('#dtls-travel-start-date');
+        this.detailsEndDate = document.querySelector('#dtls-travel-end-date');
+        this.detailsDescription = document.querySelector('#travel-details-txt');
         this.popupPic = document.querySelector('#main-pic-img');
     }
 
@@ -112,6 +123,7 @@ export default class TileService {
 
         tile.startDate = this.startDate.value;
         tile.endDate = this.endDate.value;
+        console.log(this.endDate.value);
         tile.description = this.description.value;
     }
 
@@ -180,8 +192,8 @@ export default class TileService {
 
     static clickedTile(tile: Tile) {
         TileService.detailsTitle.innerHTML = tile.title;
-        TileService.startDate.value = tile.startDate;
-        TileService.endDate.value = tile.endDate;
-        TileService.description.value = tile.description;
+        TileService.detailsStartDate.value = tile.startDate;
+        TileService.detailsEndDate.value = tile.endDate;
+        TileService.detailsDescription.value = tile.description;
     }
 }

@@ -6,27 +6,27 @@
 import { gsap } from 'gsap';
 
 export default class PopUp {
-    static popupBlackBg;
+    static popupBlackBg: HTMLDivElement;
 
-    static mainPic;
+    static mainPic: HTMLImageElement;
 
-    static mainPicInput;
+    static mainPicInput: HTMLInputElement;
 
-    static addTravelBtn;
+    static addTravelBtn: HTMLButtonElement;
 
-    static popupMain;
+    static popupMain: HTMLDivElement;
 
-    static xmark;
+    static xmark: HTMLButtonElement;
 
-    static title;
+    static title: HTMLInputElement;
 
-    static travelStart;
+    static travelStart: HTMLInputElement;
 
-    static travelEnd;
+    static travelEnd: HTMLInputElement;
 
-    static travelDetails;
+    static travelDetails: HTMLTextAreaElement;
 
-    static openPopUp;
+    static openPopUp: GSAPTimeline;
 
     static popUpClear = false;
 
@@ -48,11 +48,11 @@ export default class PopUp {
     }
 
     static initListeners() {
-        this.addTravelBtn.addEventListener('click', e => {
+        this.addTravelBtn.addEventListener('click', () => {
             PopUp.openWindow();
         });
 
-        this.popupBlackBg.addEventListener('click', e => {
+        this.popupBlackBg.addEventListener('click', () => {
             PopUp.closeWindow();
         });
 
@@ -63,19 +63,20 @@ export default class PopUp {
                 const reader = new FileReader();
 
                 reader.addEventListener('load', () => {
-                    PopUp.mainPic.setAttribute('src', reader.result);
+                    PopUp.mainPic.setAttribute('src', reader.result.toString());
                 });
                 reader.readAsDataURL(newPic);
             }
         });
 
-        this.xmark.addEventListener('click', e => {
+        this.xmark.addEventListener('click', () => {
             PopUp.closeWindow(true);
         });
     }
 
     static clearPopUpCheck() {
         if (this.popUpClear) {
+            console.log('clear');
             this.title.value = null;
             this.mainPic.setAttribute('src', 'src/icons/photoSmall_icon.svg');
             this.travelStart.value = null;
@@ -90,7 +91,7 @@ export default class PopUp {
         this.openPopUp.play();
     }
 
-    static closeWindow(clear) {
+    static closeWindow(clear: boolean = undefined) {
         this.popUpClear = clear;
         this.openPopUp.timeScale(1.6);
         this.openPopUp.reverse();
