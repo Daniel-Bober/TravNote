@@ -19,8 +19,11 @@ class App {
         const mainList = document.querySelector('.list-container');
         const addBtn = document.querySelector('#popup-checkmark-btn');
         const editBg = document.querySelector('.main-list-edit-bg');
+
+        const detailsStartDate = document.querySelector('#dtls-travel-start-date');
+        const detailsEndDate = document.querySelector('#dtls-travel-end-date');
+        const detailsDescription = document.querySelector('#travel-details-txt');
         window.onload = () => {
-            // localStorage.clear();
             if (localStorage.getItem('tilesArray') !== null) {
                 TileService.tilesArray = JSON.parse(localStorage.getItem('tilesArray'));
 
@@ -66,7 +69,6 @@ class App {
                         });
                         reader.readAsDataURL(newPic);
                     }
-                    this.value = null;
                 }, { once: true });
             }
         });
@@ -79,6 +81,18 @@ class App {
             TileService.tilesArray[TileService.trObjectNr] = TileService.trObject;
 
             localStorage.setItem('tilesArray', JSON.stringify(TileService.tilesArray));
+        });
+
+        detailsStartDate.addEventListener('change', () => {
+            TileService.saveDetails(TileService.trObject, 'startDate');
+        });
+
+        detailsEndDate.addEventListener('change', () => {
+            TileService.saveDetails(TileService.trObject, 'endDate');
+        });
+
+        detailsDescription.addEventListener('change', () => {
+            TileService.saveDetails(TileService.trObject, 'description');
         });
     }
 }

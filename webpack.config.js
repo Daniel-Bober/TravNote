@@ -22,33 +22,6 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-                test: /\.css$/i,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                        },
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                        },
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            postcssOptions: {
-                                plugins: [
-                                    [
-                                        'autoprefixer',
-                                    ],
-                                ],
-                            },
-                        },
-                    },
-                ],
-            },
-            {
                 test: /\.s[ac]ss$/i,
                 use: [
                     {
@@ -92,16 +65,6 @@ module.exports = {
                         },
                     },
                 ],
-            },
-            {
-                test: /\.m?js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env'],
-                    },
-                },
             },
         ],
     },

@@ -93,11 +93,12 @@ export default class TileService {
 
         tile.elImgInput = document.createElement('input');
         tile.elImgInput.type = 'file';
-        tile.elImgInput.setAttribute('id', 'el-pic-input');
+        tile.elImgInput.setAttribute('id', (`el-pic-input${this.tilesCount.toString()}`));
+        tile.elImgInput.classList.add('el-edit-pic-input');
         tile.picDiv.appendChild(tile.elImgInput);
 
         tile.elEditPicBtn = document.createElement('label');
-        tile.elEditPicBtn.setAttribute('for', 'el-pic-input');
+        tile.elEditPicBtn.setAttribute('for', (`el-pic-input${this.tilesCount.toString()}`));
         tile.elEditPicBtn.classList.add('el-edit-pic-btn');
         tile.picDiv.appendChild(tile.elEditPicBtn);
 
@@ -121,10 +122,11 @@ export default class TileService {
         }
         tile.titleDiv.appendChild(tile.elTitle);
 
-        tile.startDate = this.startDate.value;
-        tile.endDate = this.endDate.value;
-        console.log(this.endDate.value);
-        tile.description = this.description.value;
+        if (tile.startDate === undefined) {
+            tile.startDate = this.startDate.value;
+            tile.endDate = this.endDate.value;
+            tile.description = this.description.value;
+        }
     }
 
     static removeTile(clicked: HTMLElement) {
@@ -146,6 +148,7 @@ export default class TileService {
         tile.deleteBtn.classList.add('editActive');
         tile.elEditPicBtn.classList.add('editActive');
         tile.titleDiv.classList.add('editActive');
+        tile.picDiv.classList.add('editActive');
         tile.elTitle.removeAttribute('readonly');
     }
 
@@ -158,6 +161,7 @@ export default class TileService {
         tile.deleteBtn.classList.remove('editActive');
         tile.elEditPicBtn.classList.remove('editActive');
         tile.titleDiv.classList.remove('editActive');
+        tile.picDiv.classList.remove('editActive');
         tile.elTitle.setAttribute('readonly', 'readonly');
     }
 
@@ -191,9 +195,30 @@ export default class TileService {
     }
 
     static clickedTile(tile: Tile) {
+        if (tile.title === '') {
+            tile.title = '--';
+        }
         TileService.detailsTitle.innerHTML = tile.title;
         TileService.detailsStartDate.value = tile.startDate;
         TileService.detailsEndDate.value = tile.endDate;
         TileService.detailsDescription.value = tile.description;
+    }
+
+    static saveDetails(tile: Tile, saveMode: string) {
+        switch (saveMode) {
+            case 'startDate':
+                tile.startDate = TileService.detailsStartDate.value;
+                break;
+            case 'endDate':
+                tile.endDate = TileService.detailsEndDate.value;
+                break;
+            case 'description':
+                tile.description = TileService.detailsDescription.value;
+                break;
+            default:
+                console.log('save Details Error');
+                break;
+        }
+        localStorage.setItem('tilesArray', JSON.stringify(this.tilesArray));
     }
 }

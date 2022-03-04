@@ -42,7 +42,7 @@ export default class PopUp {
         this.travelEnd = document.querySelector('#travel-end-date');
         this.travelDetails = document.querySelector('#travel-description');
 
-        this.openPopUp = gsap.timeline({ ease: 'power2.easeOut', paused: true, onReverseComplete: this.clearPopUpCheck })
+        this.openPopUp = gsap.timeline({ ease: 'power2.easeOut', paused: true, onReverseComplete: PopUp.clearPopUpCheck })
             .to(this.popupBlackBg, { duration: 0.25, opacity: 1, pointerEvents: 'auto' })
             .to(this.popupMain, { duration: 0.3, y: '0px', opacity: 1, pointerEvents: 'auto' }, -0.1);
     }
@@ -75,14 +75,13 @@ export default class PopUp {
     }
 
     static clearPopUpCheck() {
-        if (this.popUpClear) {
-            console.log('clear');
-            this.title.value = null;
-            this.mainPic.setAttribute('src', 'src/icons/photoSmall_icon.svg');
-            this.travelStart.value = null;
-            this.travelEnd.value = null;
-            this.travelDetails.value = null;
-            this.popUpClear = false;
+        if (PopUp.popUpClear) {
+            PopUp.title.value = null;
+            PopUp.mainPic.setAttribute('src', 'src/icons/photoSmall_icon.svg');
+            PopUp.travelStart.value = null;
+            PopUp.travelEnd.value = null;
+            PopUp.travelDetails.value = null;
+            PopUp.popUpClear = false;
         }
     }
 
